@@ -1009,19 +1009,18 @@ jQuery(document).ready(function($){
 			  emplaye = $('#emplaye').val(),
 			  tarimas = $('#tarimas').val(),
 			  fierro= $('#fierro').val();
-vidrio = $('#vidrio').val();
+			  vidrio = $('#vidrio').val();
 		if( !pob_escuela ) pob_escuela = 1;
-	  pet = pet * pob_escuela;
-	  latas = latas * pob_escuela;
-	  carton = carton * pob_escuela;
-	  papel = papel * pob_escuela;
-	  periodico = periodico * pob_escuela;
-	  emplaye = emplaye * pob_escuela;
-	  tarimas = tarimas * pob_escuela;
-        vidrio = vidrio * pob_escuela;
-        fierro = fierro * pob_escuela;
-        var dinero = (pet*2) + emplaye + (tarimas * 7) + (latas * 11) + (vidrio * 0.35) + (fierro * 1.3) + carton + papel + periodico;
-        $('#dinero').html(Math.round(dinero));
+		  pet = pet * pob_escuela;
+		  latas = latas * pob_escuela;
+		  carton = carton * pob_escuela;
+		  papel = papel * pob_escuela;
+		  periodico = periodico * pob_escuela;
+		  emplaye = emplaye * pob_escuela;
+		  tarimas = tarimas * pob_escuela;
+	          vidrio = vidrio * pob_escuela;
+		  fierro = fierro * pob_escuela;
+		
         var arboles = ((papel + carton + periodico) * 17 / 1000);
         $('#arboles, #arboles2, #arboles3').html(Math.round(arboles));
 
@@ -1063,7 +1062,8 @@ vidrio = $('#vidrio').val();
 
         var feldespato = (vidrio * 69) / 1000;
         $('#feldespato').html(Math.round(feldespato));
-		$('#resultados').show();
+	
+	$('#resultados').show();
 		return false;
 	});
 });
@@ -1168,10 +1168,6 @@ function capture() {
 	<div id="resultados" style="display: none;">
 	
 		<h2 class="f32">RESULTADOS</h2>
-
-		<h4 class="bbot">RETRIBUCIÓN ECONÓMICA</h4>
-
-		<div class="resultado" style="background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON1.png) 0 0 no-repeat;">	<p>Recibirían $<span id="dinero">0</span> pesos mensuales</p></div>
 
 		<h4 class="bbot">IMPACTO AMBIENTAL</h4>
 
