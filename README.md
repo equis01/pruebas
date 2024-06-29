@@ -1,2 +1,2 @@
-# pruebas-mcv
-Documento para las pruebas/propuestas que se hacen para Medios Con Valor.
+# pruebas
+Documento para las pruebas/propuestas que se me ocurren personalmente o aportan a mi trabajo.
