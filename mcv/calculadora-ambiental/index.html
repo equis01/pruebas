@@ -1022,63 +1022,34 @@ vidrio = vidrio * pob_escuela;
 fierro = fierro * pob_escuela;
 	var dinero = (pet*2) + emplaye + (tarimas * 7) + (latas * 11) + (vidrio * 0.35) + (fierro * 1.3) + carton + papel + periodico;
 	$('#dinero').html(Math.round(dinero));
-	// Calculando el impacto ambiental basado en los materiales especificados
-
-// Calculando árboles salvados por papel y cartón
-var arboles = ((papel + carton + periodico) * 17 / 1000);
-$('#arboles, #arboles2, #arboles3').html(Math.round(arboles));
-
-// Calculando oxígeno generado por papel y cartón
-var oxigeno = ((papel + carton + periodico) * 64 / 1000);
-$('#oxigeno').html(Math.round(oxigeno));
-
-// Calculando CO2 emitido por papel y cartón
-var co2 = ((papel + carton + periodico) * 204 / 1000);
-$('#co2').html(Math.round(co2));
-
-// Calculando espacio de relleno sanitario ocupado por papel y cartón
-var relleno = ((papel + carton + periodico) * 2 / 1000);
-$('#relleno').html(Math.round(relleno));
-
-// Calculando consumo de petróleo por papel, cartón, PET y emplaye
-var petroleo = ((papel + carton + periodico) * 500 / 1000) + ((pet + emplaye) * 2222 / 1000);
-$('#petroleo').html(Math.round(petroleo));
-
-// Calculando emisiones de CO2 por papel, cartón y latas de aluminio
-var co2emision = ((papel + carton + periodico) * 1500 / 1000) + (latas * 6996 / 1000);
-$('#co2emision').html(Math.round(co2emision));
-
-// Calculando consumo de energía por papel y cartón
-var energia = ((papel + carton + periodico) * 7000 / 1000);
-$('#energia').html(Math.round(energia));
-
-// Calculando equivalente en TV para vidrio
-var tv = vidrio * 4; // Se asume que "TV" equivale a 4 días para vidrio
-$('#tv').html(Math.round(tv_vidrio));
-
-// Calculando consumo de litros de agua por papel, cartón, PET y emplaye
-var litros = ((papel + carton + periodico) * 270000 / 1000) + ((pet + emplaye) * 39260 / 1000);
-$('#litros').html(Math.round(litros));
-
-// Calculando emisión de etileno por PET y emplaye
-var etileno = ((pet + emplaye) * 1033 / 1000);
-$('#etileno').html(Math.round(etileno));
-
-// Calculando uso de bauxita por latas de aluminio
-var bauxita = latas * 8; // Una tonelada de aluminio puede ahorrar hasta 8 toneladas de bauxita
-$('#bauxita').html(Math.round(bauxita));
-
-// Calculando uso de arena por vidrio
-var arena = (vidrio * 590) / 1000;
-$('#arena').html(Math.round(arena));
-
-// Calculando uso de ceniza y caliza por vidrio
-var ceniza = (vidrio * 197) / 1000;
-$('#ceniza, #caliza').html(Math.round(ceniza));
-
-// Calculando uso de feldespato por vidrio
-var feldespato = (vidrio * 69) / 1000;
-$('#feldespato').html(Math.round(feldespato));
+	var arboles = ((papel + carton + periodico) * 17 / 1000);
+	$('#arboles, #arboles2, #arboles3').html(Math.round(arboles));
+	var oxigeno = ((papel + carton + periodico) * 64 / 1000);
+	$('#oxigeno').html(Math.round(oxigeno));
+	var co2 = ((papel + carton + periodico) * 204 / 1000);
+	$('#co2').html(Math.round(co2));
+	var relleno = ((papel + carton + periodico) * 2 / 1000);
+	$('#relleno').html(Math.round(relleno));
+	var petroleo = ((papel + carton + periodico) * 500 / 1000) + ((pet + emplaye) * 2222 / 1000);
+	$('#petroleo').html(Math.round(petroleo));
+	var co2emision = ((papel + carton + periodico) * 1500 / 1000) + (latas * 6996 / 1000);
+	$('#co2emision').html(Math.round(co2emision));
+	var energia = ((papel + carton + periodico) * 7000 / 1000);
+	$('#energia').html(Math.round(energia));
+	var tv = vidrio * 4;
+	$('#tv').html(Math.round(tv_vidrio));
+	var litros = ((papel + carton + periodico) * 270000 / 1000) + ((pet + emplaye) * 39260 / 1000);
+	$('#litros').html(Math.round(litros));
+	var etileno = ((pet + emplaye) * 1033 / 1000);
+	$('#etileno').html(Math.round(etileno));
+	var bauxita = latas * 8; 
+	$('#bauxita').html(Math.round(bauxita));
+	var arena = (vidrio * 590) / 1000;
+	$('#arena').html(Math.round(arena));
+	var ceniza = (vidrio * 197) / 1000;
+	$('#ceniza, #caliza').html(Math.round(ceniza));
+	var feldespato = (vidrio * 69) / 1000;
+	$('#feldespato').html(Math.round(feldespato));
 		$('#resultados').show();
 		return false;
 	});
