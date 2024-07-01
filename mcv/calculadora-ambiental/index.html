@@ -991,285 +991,212 @@ $(window).on('load scroll', function(){
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-e789bf8 elementor-widget elementor-widget-text-editor" data-id="e789bf8" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
-							<script type="text/javascript" src="https://www.mediosconvalor.com/js/html2canvas.js"></script><script type="text/javascript" src="https://www.mediosconvalor.com/js/jquery.plugin.html2canvas.js"></script><script type="text/javascript">
-jQuery(document).ready(function($){
-	$('input').keyup(function () { 
-    if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
-       this.value = this.value.replace(/[^0-9\.]/g, '');
-    }
+
+
+	<script type="text/javascript" src="http://www.mediosconvalor.com/js/html2canvas.js"></script>
+	<script type="text/javascript" src="http://www.mediosconvalor.com/js/jquery.plugin.html2canvas.js"></script>
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		$('input').keyup(function () { 
+			if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+				this.value = this.value.replace(/[^0-9\.]/g, '');
+			}
+		});
+		$('#calcular').click(function(){
+			var pob_escuela = $('#pob_escuela').val(),
+				pet = $('#pet').val(),
+				latas = $('#latas').val(),
+				carton = $('#carton').val(),
+				papel = $('#papel').val(),
+				periodico = $('#periodico').val(),
+				emplaye = $('#emplaye').val(),
+				tarimas = $('#tarimas').val(),
+				fierro = $('#fierro').val(),
+				vidrio = $('#vidrio').val();
+
+			if( !pob_escuela ) pob_escuela = 1;
+			pet = pet * pob_escuela;
+			latas = latas * pob_escuela;
+			carton = carton * pob_escuela;
+			papel = papel * pob_escuela;
+			periodico = periodico * pob_escuela;
+			emplaye = emplaye * pob_escuela;
+			tarimas = tarimas * pob_escuela;
+			vidrio = vidrio * pob_escuela;
+			fierro = fierro * pob_escuela;
+			
+			// Cálculos
+			var arboles = ((papel * 17 / 1000) + (periodico * 13 / 1000) + (tarimas / 8));
+			$('#arboles').html(Math.round(arboles));
+			
+			var relleno = ((papel + carton + periodico) * 2.3 / 1000) + ((latas * 7.6) / 1000);
+			$('#relleno').html(Math.round(relleno));
+			
+			var co2 = (periodico * 1.67) + (papel * 1.5) + (plastic * 2.5) + (vidrio * 0.25);
+			$('#co2').html(Math.round(co2));
+			
+			var energia = (papel * 7000 / 1000) + (periodico * 4000 / 1000) + (latas * 14000 / 1000) + (plastic * 5 / 1000);
+			$('#energia').html(Math.round(energia));
+			
+			var caliza = (vidrio * 197) / 1000;
+			$('#caliza').html(Math.round(caliza));
+			
+			var agua = (papel * 30000 / 1000) + (plastic * 39.26 / 1000) + (latas * 91200 / 1000);
+			$('#litros').html(Math.round(agua));
+			
+			var bauxita = latas * 8;
+			$('#bauxita').html(Math.round(bauxita));
+			
+			var hierro = fierro * 1.4;
+			$('#hierro').html(Math.round(hierro));
+			
+			var carbon = fierro * 0.8;
+			$('#carbon').html(Math.round(carbon));
+			
+			var casas = periodico * 0.000142857;
+			$('#casas').html(Math.round(casas));
+			
+			var combustibles = papel * 150 / 1000;
+			$('#combustibles').html(Math.round(combustibles));
+			
+			var aceite = papel * 1500 / 1000;
+			$('#aceite').html(Math.round(aceite));
+			
+			var lavadora = vidrio * 6 / 1000;
+			$('#lavadora').html(Math.round(lavadora));
+			
+			var smartphone = vidrio * 300 / 1000;
+			$('#smartphone').html(Math.round(smartphone));
+			
+			var tv = vidrio * 4 / 1000;
+			$('#tv').html(Math.round(tv));
+			
+			var moto = (plastic * 42) / 1000;
+			$('#moto').html(Math.round(moto));
+			
+			var coche = (plastic * 15) / 1000;
+			$('#coche').html(Math.round(coche));
+			
+			$('#resultados').show();
+			return false;
+		});
 	});
-	$('#calcular').click(function(){
-		var pob_escuela = $('#pob_escuela').val(),
-			  // cuota = $('#cuota').val(),
-			  pet = $('#pet').val(),
-			  latas = $('#latas').val(),
-			  carton = $('#carton').val(),
-			  papel = $('#papel').val(),
-			  periodico = $('#periodico').val(),
-			  emplaye = $('#emplaye').val(),
-			  tarimas = $('#tarimas').val(),
-			  fierro= $('#fierro').val();
-			  vidrio = $('#vidrio').val();
-		if( !pob_escuela ) pob_escuela = 1;
-		  pet = pet * pob_escuela;
-		  latas = latas * pob_escuela;
-		  carton = carton * pob_escuela;
-		  papel = papel * pob_escuela;
-		  periodico = periodico * pob_escuela;
-		  emplaye = emplaye * pob_escuela;
-		  tarimas = tarimas * pob_escuela;
-	          vidrio = vidrio * pob_escuela;
-		  fierro = fierro * pob_escuela;
-		
-        var arboles = ((papel + carton + periodico) * 17 / 1000);
-        $('#arboles, #arboles2, #arboles3').html(Math.round(arboles));
+	function capture() {
+		$('#resultados').html2canvas({
+			onrendered: function (canvas) {
+				var img = canvas.toDataURL("image/png");
+				var output = img.replace(/^data:image\/(png|jpg);base64,/, "");
+				var output = encodeURIComponent(img);
+				var Parameters = "image=" + output;
+				$.ajax({
+					type: "POST",
+					url: "save.php",
+					data: Parameters
+				}).done(function(data) {
+					var img = 'http://www.mediosconvalor.com/' + data.trim() + '.png'; 
+					window.open(img);
+				});
+			}
+		});
+	}
+	</script>
+	<script type="text/javascript">var switchTo5x=true;</script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "ur-b48ddff1-2b09-bda-ff99-92a6298a738e", doNotHash: true, doNotCopy: true, hashAddressBar: false});</script>
 
-        var oxigeno = ((papel + carton + periodico) * 64 / 1000);
-        $('#oxigeno').html(Math.round(oxigeno));
-
-        var co2 = ((papel + carton + periodico) * 204 / 1000);
-        $('#co2').html(Math.round(co2));
-
-        var relleno = ((papel + carton + periodico) * 2 / 1000);
-        $('#relleno').html(Math.round(relleno));
-
-        var petroleo = ((papel + carton + periodico) * 500 / 1000) + ((pet + emplaye) * 2222 / 1000);
-        $('#petroleo').html(Math.round(petroleo));
-
-        var co2emision = ((papel + carton + periodico) * 1500 / 1000) + (latas * 6996 / 1000);
-        $('#co2emision').html(Math.round(co2emision));
-
-        var energia = ((papel + carton + periodico) * 7000 / 1000);
-        $('#energia').html(Math.round(energia));
-
-        var tv = (vidrio * 4);
-        $('#tv').html(Math.round(tv));
-
-        var litros = ((papel + carton + periodico) * 270000 / 1000) + ((pet + emplaye) * 39260 / 1000) + ((latas * 91200) / 1000);
-        $('#litros').html(Math.round(litros));
-
-        var etileno = ((pet + emplaye) * 1033 / 1000);
-        $('#etileno').html(Math.round(etileno));
-
-        var bauxita = latas * 8;
-        $('#bauxita').html(Math.round(bauxita));
-
-        var arena = (vidrio * 590) / 1000;
-        $('#arena').html(Math.round(arena));
-
-        var ceniza = (vidrio * 197) / 1000;
-        $('#ceniza, #caliza').html(Math.round(ceniza));
-
-        var feldespato = (vidrio * 69) / 1000;
-        $('#feldespato').html(Math.round(feldespato));
-	
-	$('#resultados').show();
-		return false;
-	});
-});
-function capture() {
-    $('#resultados').html2canvas({
-        onrendered: function (canvas) {
-            var img = canvas.toDataURL("image/png");
-            var output = img.replace(/^data:image\/(png|jpg);base64,/, "");
-            var output = encodeURIComponent(img);
-            //Set hidden field's value to image data (base-64 string)
-            //$('#img_val').val(canvas.toDataURL("image/png"));
-            //$('#img-res').attr('src', canvas.toDataURL("image/png"));
-            //Submit the form manually
-            //document.getElementById("myForm").submit();
-            var Parameters = "image=" + output;
-            $.ajax({
-                type: "POST",
-                url: "save.php",
-                data: Parameters
-            }).done(function(data) {
-            		var img = 'https://www.mediosconvalor.com/' + data.trim() + '.png'; 
-                window.open(img);
-            });
-        }
-    });
-}
-</script><script type="text/javascript">var switchTo5x=true;</script><script type="text/javascript" src="https://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher: "ur-b48ddff1-2b09-bda-ff99-92a6298a738e", doNotHash: true, doNotCopy: true, hashAddressBar: false});</script>
 <div class="row-fluid calculadora">
-	
 	<div>
-	
-		
-
 		<div class="calc-info">
-		
 			<h2 class="f32">DATOS PARA CALCULAR</h2>
-
 			<div class="row-fluid mb20">
 				<div class="span12">
 					<h4 id="poblacion">POBLACIÓN <a class="tooltips" title="Ejemplo: 1000. Nota: Si no conoces la cantidad de personas, puedes dejar este campo en blanco."></a></h4>
-
 					<div class="row-fluid">
 						<div class="span5"><p>Número de personas (empleados, alumnos)</p></div>
-
-						<div class="span3"><input class="span6" type="text" name="pob_escuela" id="pob_escuela"></div>		
-					</div>			
+						<div class="span3"><input class="span6" type="text" name="pob_escuela" id="pob_escuela"></div>
+					</div>
 				</div>
-
 			</div>
-			
-
 			<h4 id="materiales">MATERIALES <a class="tooltips" title="Escribe un estimado de kilogramos por mes de cada material, por persona (en caso de aplicar)."></a></h4>
-
 			<div class="row-fluid">
-				
-				<div class="span1">	<p>PET</p></div>
-				<div class="span3 bright">	<div class="span4"><input class="span11" type="text" id="pet"></div> <p class="span3">Kgs.</p></div>	
-
-				<div class="span1">	<p>Latas</p></div>
-				<div class="span3 bright">	<div class="span4"><input class="span11" type="text" id="latas"></div> <p class="span3">Kgs.</p></div>
-				
-				<div class="span1">	<p>Papel</p></div>
-				<div class="span3">	<div class="span4"><input class="span11" type="text" id="papel"></div> <p class="span3">Kgs.</p></div>
-
+				<div class="span1"><p>PET</p></div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="pet"></div> <p class="span3">Kgs.</p></div>
+				<div class="span1"><p>Latas</p></div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="latas"></div> <p class="span3">Kgs.</p></div>
+				<div class="span1"><p>Papel</p></div>
+				<div class="span3"><div class="span4"><input class="span11" type="text" id="papel"></div> <p class="span3">Kgs.</p></div>
 			</div>
-
-			<div class="row-fluid">		
-
-				<div class="span1">	<p>Periódico</p></div>
-				<div class="span3 bright">	<div class="span4"><input class="span11" type="text" id="periodico"></div> <p class="span3">Kgs.</p></div>	
-				
-				<div class="span1">	<p>Cartón</p></div>
-				<div class="span3 bright">	<div class="span4"><input class="span11" type="text" id="carton"></div> <p class="span3">Kgs.</p></div>	
-
-				<div class="span1">	<p>Emplaye</p></div>
-				<div class="span3">	<div class="span4"><input class="span11" type="text" id="emplaye"></div> <p class="span3">Kgs.</p></div>	
-
+			<div class="row-fluid">
+				<div class="span1"><p>Periódico</p></div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="periodico"></div> <p class="span3">Kgs.</p></div>
+				<div class="span1"><p>Cartón</p></div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="carton"></div> <p class="span3">Kgs.</p></div>
+				<div class="span1"><p>Emplaye</p></div>
+				<div class="span3"><div class="span4"><input class="span11" type="text" id="emplaye"></div> <p class="span3">Kgs.</p></div>
 			</div>
-
-			<div class="row-fluid mb20">		
-<div class="span1">
-																<p>Vidrio</p>
-															</div>
-															<div class="span3 bright">
-																<div class="span4"><input class="span11" type="text" id="vidrio"></div>
-																<p class="span3">Kgs.</p>
-															</div>
-				<div class="span1">	<p>Tarimas</p> </div>
-				<div class="span3 bright">	<div class="span4"><input class="span11" type="text" id="tarimas"></div> <p class="span3">Uds</p></div>
-				<div class="span1">	<p>Fierro</p></div>
-				<div class="span3">	<div class="span4"><input class="span11" type="text" id="fierro"></div> <p class="span3">Kgs.</p></div>	
-
+			<div class="row-fluid mb20">
+				<div class="span1"><p>Vidrio</p></div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="vidrio"></div> <p class="span3">Kgs.</p></div>
+				<div class="span1"><p>Tarimas</p> </div>
+				<div class="span3 bright"><div class="span4"><input class="span11" type="text" id="tarimas"></div> <p class="span3">Uds</p>
 			</div>
-
-			<a id="calcular" class="btn">CALCULAR</a>
-
-			
-		</div>
-
-	</div>
-
-	<div id="resultados" style="display: none;">
-	
-		<h2 class="f32">RESULTADOS</h2>
-
-		<h4 class="bbot">IMPACTO AMBIENTAL</h4>
-
-		<div class="row-fluid">
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON2.png) 0 0 no-repeat;">
-					<p>Salvarían <span id="arboles">0</span> árboles</p>
+				<div class="span1"><p>Fierro</p></div>
+				<div class="span3"><div class="span4"><input class="span11" type="text" id="fierro"></div> <p class="span3">Kgs.</p></div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12 center">
+					<button id="calcular" class="btn btn-primary btn-large">Calcular</button>
 				</div>
 			</div>
-
 		</div>
+	</div>
+</div>
 
-		<div class="row-fluid">
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON3.png) 0 0 no-repeat;">	<p class="long">Si los <span id="arboles2">0</span> árboles fueran maduros,  darían  oxigeno a <span id="oxigeno">0</span> personas</p></div>
+<div id="resultados" class="row-fluid resultados" style="display: none;">
+	<div>
+		<h2 class="f32">RESULTADOS</h2>
+		<div class="row-fluid mb20">
+			<div class="span3">
+				<h4 id="arboles">Árboles salvados: <span></span></h4>
+				<h4 id="relleno">Reducción de residuos de relleno sanitario (m<sup>3</sup>): <span></span></h4>
+				<h4 id="co2">Reducción de emisiones de CO<sub>2</sub> (kg): <span></span></h4>
+				<h4 id="energia">Energía ahorrada (kWh): <span></span></h4>
 			</div>
-
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON4.png) 0 0 no-repeat;">	<p class="long">Si los <span id="arboles3">0</span> árboles fueran maduros, capturarían <span id="co2">0</span> kilogramos de bióxido de carbono</p></div>
+			<div class="span3">
+				<h4 id="caliza">Caliza ahorrada (kg): <span></span></h4>
+				<h4 id="litros">Agua ahorrada (litros): <span></span></h4>
+				<h4 id="bauxita">Bauxita ahorrada (kg): <span></span></h4>
+				<h4 id="hierro">Hierro ahorrado (kg): <span></span></h4>
 			</div>
-
+			<div class="span3">
+				<h4 id="carbon">Carbón ahorrado (kg): <span></span></h4>
+				<h4 id="casas">Hogares abastecidos con electricidad: <span></span></h4>
+				<h4 id="combustibles">Combustibles fósiles ahorrados (kg): <span></span></h4>
+				<h4 id="aceite">Aceite ahorrado (litros): <span></span></h4>
+			</div>
+			<div class="span3">
+				<h4 id="lavadora">Lavadoras equivalentes (ud): <span></span></h4>
+				<h4 id="smartphone">Smartphones equivalentes (ud): <span></span></h4>
+				<h4 id="tv">Televisores equivalentes (ud): <span></span></h4>
+				<h4 id="moto">Motocicletas equivalentes (ud): <span></span></h4>
+				<h4 id="coche">Automóviles equivalentes (ud): <span></span></h4>
+			</div>
 		</div>
-
-		<div class="row-fluid">
-
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON5.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="relleno">0</span> mts. cúbicos en el relleno sanitario</p></div>
-			</div>
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON6.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="petroleo">0</span> kgs. de petróleo</p></div>
-			</div>
-
+		<div class="row-fluid center">
+			<button onclick="capture()" class="btn btn-primary btn-large">Guardar resultados</button>
 		</div>
-
-		<div class="row-fluid">
-
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON7.png) 0 0 no-repeat;">	<p class="long">Ahorrarían <span id="co2emision">0</span> kgs de emisión de bióxido de carbono</p></div>
-			</div>
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON8.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="litros">0</span> litros de agua</p></div>
-			</div>
-
-		</div>
-
-		<div class="row-fluid">
-
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/icon9.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="energia">0</span> Kw/Hr de energía</p></div>
-			</div>
-
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/icon10.png) 0 0 no-repeat;">	<p class="long">Ahorrarían energía que haría funcionar aproximadamente <span id="tv">0</span> televisores por 3 horas</p></div>
-			</div>
-
-		</div>
-
-		<div class="row-fluid">
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON11.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="etileno">0</span> kg de etileno</p></div>
-			</div>
-			
-			<div class="span6">
-				<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON12.png) 0 0 no-repeat;">	<p>Ahorrarían <span id="bauxita">0</span>kg de bauxita</p></div>
-			</div>
-
-		</div>
-
-<div class="row-fluid">
-													<div class="span6">
-														<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON13.png) 0 0 no-repeat;">
-															<p>Ahorrarían <span id="arena">0</span> kg de arena</p>
-														</div>
-													</div>
-													<div class="span6">
-														<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON14.png) 0 0 no-repeat; ">
-															<p>Ahorrarían <span id="ceniza">0</span>kg de ceniza</p>
-														</div>
-													</div>
-												</div>
-												<div class="row-fluid">
-													<div class="span6">
-														<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON15.png) 0 0 no-repeat;">
-															<p>Ahorrarían <span id="caliza">0</span> kg de piedra caliza</p>
-														</div>
-													</div>
-													<div class="span6">
-														<div class="resultado" style=" background: url(https://mediosconvalor.com/wp-content/uploads/2024/06/ICON16.png) 0 0 no-repeat;">
-															<p>Ahorrarían <span id="feldespato">0</span>kg de feldespato</p>
-														</div>
-													</div>
-												</div>
 	</div>
 </div>
 
 
-						</div>
+
+
+
+
+
+
+
+				</div>
 				</div>
 					</div>
 				</div>
