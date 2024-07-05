@@ -50,12 +50,28 @@
       cursor: pointer;
       border-radius: 4px;
     }
+    .signature-container {
+      margin-bottom: 20px;
+    }
+    .signature-pad {
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 200px;
+    }
+    .signature-pad::after {
+      content: "Firme aquí";
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+    }
   </style>
+  <!-- Incluir la librería Signature Pad -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 </head>
 <body>
   <div class="form-container">
     <h2>Registro de Visita</h2>
-    <form id="visitForm" action="https://script.google.com/macros/s/AKfycbyh25dSF6477LJNquzqhBNwyeCQ-srIZq8moceb272h8UhNrEcisdw66TR7uq-6G9crGw/exec" method="post" enctype="multipart/form-data">
+    <form id="visitForm" action="https://script.google.com/macros/s/AKfycbxz-iWTNMFZiJdSXXLrvP9NCrmUoJggae5Jk0_unHH9zvG_WS1aMbqgObaGnuyg7zP0ZA/exec" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="id">ID:</label>
         <input type="number" id="id" name="id" required>
@@ -68,12 +84,15 @@
         <label for="volumen">Volumen:</label>
         <input type="number" id="volumen" name="volumen" required>
       </div>
+      <div class="signature-container">
         <label for="firmaOperador">Firma Operador:</label>
-        <input type="text" id="firmaOperador" name="firmaOperador" required>
+        <div id="signaturePadOperador" class="signature-pad"></div>
+        <textarea id="firmaOperador" name="firmaOperador" style="display: none;"></textarea>
       </div>
-      <div class="form-group">
+      <div class="signature-container">
         <label for="firmaCliente">Firma Cliente:</label>
-        <input type="text" id="firmaCliente" name="firmaCliente" required>
+        <div id="signaturePadCliente" class="signature-pad"></div>
+        <textarea id="firmaCliente" name="firmaCliente" style="display: none;"></textarea>
       </div>
       <div class="form-group">
         <input type="submit" value="Registrar Visita">
@@ -81,25 +100,22 @@
     </form>
   </div>
   <script>
-    document.getElementById('visitForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var form = event.target;
-
-      var formData = new FormData(form);
-
-      fetch(form.action, {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert(data);
-        form.reset();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al enviar los datos. Inténtalo de nuevo.');
+    // Función para inicializar Signature Pad en las áreas de firma
+    function initSignaturePad(elementId) {
+      var canvas = document.getElementById(elementId);
+      var signaturePad = new SignaturePad(canvas);
+      
+      // Convertir la firma a datos de imagen al enviar el formulario
+      document.getElementById('visitForm').addEventListener('submit', function(event) {
+        // Convertir la firma a datos de imagen en base64
+        document.getElementById(elementId.replace('signaturePad', '')).value = signaturePad.toDataURL();
       });
+    }
+
+    // Inicializar Signature Pad en las áreas de firma
+    document.addEventListener('DOMContentLoaded', function() {
+      initSignaturePad('signaturePadOperador');
+      initSignaturePad('signaturePadCliente');
     });
   </script>
 </body>
